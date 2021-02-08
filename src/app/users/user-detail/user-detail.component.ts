@@ -17,9 +17,6 @@ export class UserDetailComponent implements OnInit {
 
   user$ = this.store$.select(selectors.selectUserData);
   userLoading$ = this.store$.select(selectors.selectUsersLoading);
-
-
-
   followers$ = this.store$.select(selectors.selectFollowersData);
   followersPage$ = this.store$.select(selectors.selectFollowersPage);
   followersLoading$ = this.store$.select(selectors.selectFollowersLoading);
@@ -38,4 +35,5 @@ export class UserDetailComponent implements OnInit {
   onPageSelect(page: number): void {
     this.store$.dispatch(loadFollowers({ page }));
   }
+
 }

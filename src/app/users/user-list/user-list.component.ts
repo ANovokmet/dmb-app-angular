@@ -31,4 +31,5 @@ export class UserListComponent implements OnInit {
   onPageSelect(page: number): void {
     this.store$.dispatch(loadUsers({ usersPage: page }));
   }
+  
 }

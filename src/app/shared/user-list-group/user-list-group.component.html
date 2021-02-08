@@ -1,0 +1,5 @@
+<ul class="list-group">
+    <a *ngFor="let item of data" [routerLink]="['/', item.login]" class="list-group-item list-group-item-action">
+      {{item.login}}
+    </a>
+</ul>

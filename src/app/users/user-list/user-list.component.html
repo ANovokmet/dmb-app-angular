@@ -1,0 +1,11 @@
+
+<div class="d-flex pt-3 pb-2 mb-3 border-bottom">
+    <h2>Users</h2>
+</div>
+
+<app-search class="d-block mb-3" [value]="query$ | async" (search)="onSearch($event)"></app-search>
+<div class="position-relative">
+    <app-user-list-group class="d-block mb-3" [data]="users$ | async"></app-user-list-group>
+    <app-loader *ngIf="usersLoading$ | async"></app-loader>
+</div>
+<app-pagination *ngIf="users$ | async" [total]="total$ | async" [active]="page$ |async" (selectPage)="onPageSelect($event)"></app-pagination>

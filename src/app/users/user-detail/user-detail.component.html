@@ -1,0 +1,16 @@
+<div class="d-flex pt-3 pb-2 mb-3 border-bottom" *ngIf="user$ | async as user">
+    <h2>{{user.login}}</h2>
+</div>
+<div class="position-relative">
+    <app-user-card class="d-block mb-3" *ngIf="user$ | async" [data]="user$ | async"></app-user-card>
+    <app-loader *ngIf="userLoading$ | async"></app-loader>
+</div>
+<div class="d-flex mb-3 border-bottom">
+    <h4>Followers</h4>
+</div>
+<div class="position-relative">
+    <app-user-list-group class="d-block mb-3" [data]="followers$ | async"></app-user-list-group>
+    <app-loader *ngIf="followersLoading$ | async"></app-loader>
+</div>
+<app-pagination *ngIf="followers$ | async" [active]="followersPage$ | async" [total]="followersTotal$ | async"
+    (selectPage)="onPageSelect($event)"></app-pagination>

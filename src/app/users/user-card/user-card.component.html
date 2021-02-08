@@ -1,0 +1,19 @@
+<div class="card">
+    <div class="card-body container">
+        <div class="row">
+            <div class="col-md-4 col-xs-12 d-flex justify-content-center d-md-block">
+                <img [src]="data.avatar_url" class="rounded-circle border border-primary img-thumbnail mw-25" alt="user avatar">
+            </div>
+            <div class="col-md-8 text-md-left col-xs-12 text-xs-center">
+                <div class="col-12 row">
+                    <span class="font-weight-light mx-2">Name</span> 
+                    {{data.name}}
+                </div>
+                <div class="col-12 row">
+                    <span class="font-weight-light mx-2">Created at</span> 
+                    {{data.created_at | date:'medium'}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

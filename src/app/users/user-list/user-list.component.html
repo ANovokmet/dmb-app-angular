@@ -4,6 +4,9 @@
 </div>
 
 <app-search class="d-block mb-3" [value]="query$ | async" (search)="onSearch($event)"></app-search>
+<div class="border rounded empty-state font-weight-light text-center p-4" *ngIf="!(query$ | async)">
+    Start typing to search users.
+</div>
 <div class="position-relative">
     <app-user-list-group class="d-block mb-3" [data]="users$ | async"></app-user-list-group>
     <app-loader *ngIf="usersLoading$ | async"></app-loader>

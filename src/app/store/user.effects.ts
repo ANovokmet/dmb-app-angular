@@ -19,10 +19,13 @@ export class UserEffects {
       withLatestFrom(this.store$.select(selectUsersPage), this.store$.select(selectUsersQuery)),
       map(([action, usersPage, query]) => ({usersPage, query, ...action})),
       switchMap(data =>
+        data.query ?
         this.users.searchUsers(data.query, data.usersPage + 1).pipe(
           map(response => actions.loadUsersSuccess({ data: response.items, total: response.total_count })),
           catchError(error => of(actions.loadUsersFailure({ error })))
         )
+        :
+        of(actions.loadUsersSuccess({ data: null, total: 0 }))
       )
     )
   );

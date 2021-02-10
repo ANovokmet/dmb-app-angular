@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State } from '@store';
-import { loadUsers } from '@store/user.actions';
-import { selectUsersData, selectUsersLoading, selectUsersPage, selectUsersQuery, selectUsersTotalPages } from '@store/user.selectors';
+import { loadUsers } from '@store/user/user.actions';
+import { selectUsersData, selectUsersLoading, selectUsersPage, selectUsersQuery, selectUsersTotalPages } from '@store/user/user.selectors';
 
 @Component({
   selector: 'app-user-list',
@@ -25,11 +25,11 @@ export class UserListComponent implements OnInit {
   }
 
   onSearch(query: string): void {
-    this.store$.dispatch(loadUsers({ query, usersPage: 0 }));
+    this.store$.dispatch(loadUsers({ query, page: 0 }));
   }
 
   onPageSelect(page: number): void {
-    this.store$.dispatch(loadUsers({ usersPage: page }));
+    this.store$.dispatch(loadUsers({ page }));
   }
   
 }

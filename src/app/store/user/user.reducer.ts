@@ -2,6 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 
 import * as actions from './user.actions';
 import { User, UserDetail } from '@core/models';
+import { onLoading } from '@core/utils/state.utils';
 
 export const userFeatureKey = 'user';
 
@@ -35,31 +36,32 @@ export const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
-  on(actions.loadUsers, (state, action) => ({ ...state, ...action, usersLoading: true })),
+  ...onLoading<State>('usersLoading', [actions.loadUsers, actions.loadUsersSuccess, actions.loadUsersFailure]),
+  ...onLoading<State>('followersLoading', [actions.loadFollowers, actions.loadFollowersSuccess, actions.loadFollowersFailure]),
+  ...onLoading<State>('userLoading', [actions.loadUser, actions.loadUserSuccess, actions.loadUserFailure]),
+  on(actions.loadUsers, (state, action) => ({
+    ...state,
+    query: action.query !== undefined ? action.query : state.query,
+    usersPage: action.page !== undefined ? action.page : state.usersPage
+  })),
   on(actions.loadUsersSuccess, (state, action) => ({
     ...state,
-    usersLoading: false,
     usersTotal: action.total,
     usersData: action.data,
     error: null
   })),
-  on(actions.loadUsersFailure, (state, { error }) => ({ ...state, usersLoading: false, error })),
-
-  on(actions.loadFollowers, (state, action) => ({ ...state, followersPage: action.page, followersLoading: true })),
+  on(actions.loadFollowers, (state, action) => ({
+    ...state,
+    followersPage: action.page
+  })),
   on(actions.loadFollowersSuccess, (state, action) => ({
     ...state,
-    followersLoading: false,
     followersData: action.data,
     error: null
   })),
-  on(actions.loadFollowersFailure, (state, { error }) => ({ ...state, followersLoading: false, error })),
-
-  on(actions.loadUser, (state, action) => ({ ...state, userLoading: true })),
   on(actions.loadUserSuccess, (state, action) => ({
     ...state,
-    userLoading: false,
     userData: action.data,
     error: null
-  })),
-  on(actions.loadUserFailure, (state, { error }) => ({ ...state, userLoading: false, error })),
+  }))
 );

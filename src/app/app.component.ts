@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { State } from './store';
-import { selectError } from '@store/user.selectors';
+import { selectError } from '@store/user/user.selectors';
 
 @Component({
   selector: 'app-root',

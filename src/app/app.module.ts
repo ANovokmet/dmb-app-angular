@@ -11,7 +11,7 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { UsersModule } from './users/users.module';
 import { reducers, metaReducers } from './store';
-import { UserEffects } from './store/user.effects';
+import { UserEffects } from './store/user/user.effects';
 
 @NgModule({
   declarations: [
@@ -20,14 +20,12 @@ import { UserEffects } from './store/user.effects';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    StoreModule.forRoot({}, {}),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     EffectsModule.forRoot([]),
     CoreModule,
     SharedModule,
     UsersModule,
     StoreModule.forRoot(reducers, { metaReducers }),
-    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }) : [],
     EffectsModule.forFeature([UserEffects])
   ],
   providers: [],

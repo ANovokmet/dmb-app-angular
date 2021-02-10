@@ -1,11 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 
-interface Page {
-  index?: number;
-  display: string;
-  disabled: boolean;
-}
-
 @Component({
   selector: 'app-pagination',
   templateUrl: './pagination.component.html',

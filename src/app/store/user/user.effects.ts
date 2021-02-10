@@ -6,9 +6,8 @@ import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
 import * as actions from './user.actions';
-import { State } from '.';
-import { selectFollowersPage, selectUsersPage, selectUsersQuery } from './user.selectors';
-
+import { State } from '..';
+import { selectUsersPage, selectUsersQuery } from './user.selectors';
 
 @Injectable()
 export class UserEffects {
@@ -17,15 +16,15 @@ export class UserEffects {
     this.actions$.pipe(
       ofType(actions.loadUsers),
       withLatestFrom(this.store$.select(selectUsersPage), this.store$.select(selectUsersQuery)),
-      map(([action, usersPage, query]) => ({usersPage, query, ...action})),
+      map(([action, page, query]) => ({ page, query, ...action })),
       switchMap(data =>
         data.query ?
-        this.users.searchUsers(data.query, data.usersPage + 1).pipe(
-          map(response => actions.loadUsersSuccess({ data: response.items, total: response.total_count })),
-          catchError(error => of(actions.loadUsersFailure({ error })))
-        )
-        :
-        of(actions.loadUsersSuccess({ data: null, total: 0 }))
+          this.users.searchUsers(data.query, data.page + 1).pipe(
+            map(response => actions.loadUsersSuccess({ data: response.items, total: response.total_count })),
+            catchError(error => of(actions.loadUsersFailure({ error })))
+          )
+          :
+          of(actions.loadUsersSuccess({ data: null, total: 0 }))
       )
     )
   );
@@ -45,10 +44,8 @@ export class UserEffects {
   loadFollowers$ = createEffect(() =>
     this.actions$.pipe(
       ofType(actions.loadFollowers),
-      withLatestFrom(this.store$.select(selectFollowersPage)),
-      map(([action, page]) => ({page, ...action})),
       switchMap(data =>
-        this.users.getUserFollowers(data.login, data.page).pipe(
+        this.users.getUserFollowers(data.login, data.page + 1).pipe(
           map(response => actions.loadFollowersSuccess({ data: response })),
           catchError(error => of(actions.loadFollowersFailure({ error })))
         )

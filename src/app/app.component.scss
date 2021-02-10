@@ -1,8 +1,10 @@
-body {
-  font-size: .875rem;
-}
+
 
 [role="main"] {
   padding-top: 48px;
   max-width: 900px;
+  border: 1px solid #ccc;
+  box-shadow: 1px 6px 20px 0 #cccccc4f;
+  background: #fff;
+  min-height: 100vh;
 }

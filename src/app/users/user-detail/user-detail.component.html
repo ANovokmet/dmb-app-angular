@@ -5,12 +5,14 @@
     <app-user-card class="d-block mb-3" *ngIf="user$ | async" [data]="user$ | async"></app-user-card>
     <app-loader *ngIf="userLoading$ | async"></app-loader>
 </div>
-<div class="d-flex mb-3 border-bottom">
-    <h4>Followers</h4>
-</div>
-<div class="position-relative">
-    <app-user-list-group class="d-block mb-3" [data]="followers$ | async"></app-user-list-group>
-    <app-loader *ngIf="followersLoading$ | async"></app-loader>
-</div>
-<app-pagination *ngIf="followers$ | async" [active]="followersPage$ | async" [total]="followersTotal$ | async"
-    (selectPage)="onPageSelect($event)"></app-pagination>
+<ng-container *ngIf="followers$ | async as followers">
+    <div class="d-flex mb-3 border-bottom">
+        <h4>Followers</h4>
+    </div>
+    <div class="position-relative">
+        <app-user-list-group class="d-block mb-3" [data]="followers"></app-user-list-group>
+        <app-loader *ngIf="followersLoading$ | async"></app-loader>
+    </div>
+    <app-pagination [active]="followersPage$ | async" [total]="followersTotal$ | async"
+        (selectPage)="onPageSelect($event)"></app-pagination>
+</ng-container>

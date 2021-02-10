@@ -5,8 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 
 import { State } from '@store';
-import { loadFollowers, loadUser } from '@store/user.actions';
-import * as selectors from '@store/user.selectors';
+import { loadFollowers, loadUser } from '@store/user/user.actions';
+import * as selectors from '@store/user/user.selectors';
 
 @Component({
   selector: 'app-user-detail',
@@ -22,8 +22,11 @@ export class UserDetailComponent implements OnInit {
   followersLoading$ = this.store$.select(selectors.selectFollowersLoading);
   followersTotal$ = this.store$.select(selectors.selectFollowersTotalPages);
 
+  login: string;
+
   constructor(private store$: Store<State>, private route: ActivatedRoute) {
     route.params.pipe(map(p => p.login)).subscribe(login => {
+      this.login = login;
       store$.dispatch(loadUser({ login }));
       store$.dispatch(loadFollowers({ login, page: 0 }));
     });
@@ -33,7 +36,7 @@ export class UserDetailComponent implements OnInit {
   }
 
   onPageSelect(page: number): void {
-    this.store$.dispatch(loadFollowers({ page }));
+    this.store$.dispatch(loadFollowers({ login: this.login, page }));
   }
 
 }

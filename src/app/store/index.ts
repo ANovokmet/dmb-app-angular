@@ -4,7 +4,7 @@ import {
 } from '@ngrx/store';
 import { environment } from '../../environments/environment';
 
-import * as user from './user.reducer';
+import * as user from './user/user.reducer';
 
 export interface State {
   [user.userFeatureKey]: user.State;
